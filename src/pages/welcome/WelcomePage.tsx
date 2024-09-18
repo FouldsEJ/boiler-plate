@@ -39,6 +39,24 @@ export const WelcomePage = () => {
     { title: 'ID', value: id || '-' },
   ]
 
+  const makeApiRequest = async () => {
+    try {
+      const response = await fetch('https://localhost:5000/wpp-open/test', {
+        headers: {
+          Authorization: `Bearer ${osApi.getAccessToken()}`,
+          // Authorization:
+          //   'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRFRCBEQU5JTEUiLCJhZG1pbiI6dHJ1ZSwiaWF0IjoxNTE2MjM5MDIyfQ.lTOPFC5ZA4TTygckAJhetqIgXPNIX-PKhKbIu4lkBXmT_HsHBmBo11LOSSW6e0Qhu5jFX6aBOFUI1SDsrJByW2EeT6WE2pdCT_A3eZmf9hFpb5U3Hb3Zn6herbArzbCtOGaQU1TViLFGKMiY6-IQMQDbVSnDc1zVlDbX-fSwYQOhE4l2GfOkytP3FVQz3Phf-6KAht2Z4odcKuVqr9YWIWOCmc9Ri4aFqG8bipxMbKkRjcqDSOuipUEdrH1DUgBrqlaxe8mrLwKZSVIRruejlF6cncdMCRSJAnc4YgR4A1DgdU1sTEkKWd9DKt5fEtclR5q_Jrq4Hhb6P8A9rInlrw',
+        },
+      })
+
+      const data = await response.json()
+
+      console.log('DATA: ', data)
+    } catch (err) {
+      console.log('Error: ', err)
+    }
+  }
+
   return (
     <>
       <div className={styles.intro}>
@@ -86,6 +104,10 @@ export const WelcomePage = () => {
         <WppActionButton onClick={() => navigator.clipboard.writeText(osApi.getAccessToken())}>
           Copy auth token
         </WppActionButton>
+      </WppCard>
+
+      <WppCard>
+        <WppActionButton onClick={makeApiRequest}>Make Test API Request</WppActionButton>
       </WppCard>
     </>
   )
